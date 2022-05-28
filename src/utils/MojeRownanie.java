@@ -1,7 +1,11 @@
+package utils;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+
 
 public class MojeRownanie<T extends Number> {
     private final T[][] originalMatrix;
@@ -216,6 +220,13 @@ public class MojeRownanie<T extends Number> {
 
         return b1;
     }
+
+//    public T[][] solveGaussPG(){
+//        T[][] b1 = this.gaussPGkrok1();
+//        T[][] result = this.gaussKrok2();
+//
+//        return result;
+//    }
 
     public T[][] solveGaussPG(){
         T[][] b1 = this.gaussPGkrok1();
