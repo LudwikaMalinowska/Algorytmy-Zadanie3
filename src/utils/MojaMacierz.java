@@ -1,3 +1,5 @@
+package utils;
+
 import java.lang.reflect.Array;
 
 //przyjmuje dowolny typ liczby, ale z uwagi na to jak zaimplementowane są liczby w
