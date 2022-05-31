@@ -2,6 +2,9 @@ package utils;
 
 import java.lang.reflect.Array;
 
+import static utils.GenericNumberUtils.substract;
+import static utils.GenericNumberUtils.sum;
+
 //przyjmuje dowolny typ liczby, ale z uwagi na to jak zaimplementowane są liczby w
 // javie, oraz że typy generyczne nie są przystosowane do matematyki
 // metody zwracają double
@@ -45,8 +48,7 @@ public class MojaMacierz<T extends Number> {
 
         for (int i = 0; i < values.length; i++){
             for (int j = 0; j < values[0].length; j++){
-                result[i][j] = convertToType(clazz,String.valueOf(values[i][j].doubleValue()
-                        + other[i][j].doubleValue()));
+                result[i][j] = sum(values[i][j],other[i][j]);
             }
         }
 
@@ -63,8 +65,7 @@ public class MojaMacierz<T extends Number> {
 
         for (int i = 0; i < values.length; i++){
             for (int j = 0; j < values[0].length; j++){
-                result[i][j] = convertToType(clazz, String.valueOf(values[i][j].doubleValue()
-                        - other[i][j].doubleValue()));
+                result[i][j] = substract(values[i][j],other[i][j]);
             }
         }
 

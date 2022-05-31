@@ -17,7 +17,7 @@ public class GenericNumberUtils {
         }
     }
 
-    public static <T extends Number> T subtract(final T number1, final T number2) {
+    public static <T extends Number> T substract(final T number1, final T number2) {
         if (number1 instanceof Double && number2 instanceof Double) {
             return (T) Double.valueOf(number1.doubleValue() - number2.doubleValue());
         } else if (number1 instanceof Float && number2 instanceof Float) {

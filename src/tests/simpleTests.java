@@ -7,6 +7,18 @@ import java.math.BigInteger;
 
 public class simpleTests {
     public static void main(String[] args) {
+     FractionTest();
+    }
+
+    public static void SparseMatrix(){
+
+    }
+
+    public static void GaussTest(){
+
+
+    }
+    public static void FractionTest(){
         Fraction half = new Fraction(BigInteger.valueOf(-4), BigInteger.valueOf(8));
         System.out.println(half);
 
