@@ -4,6 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static utils.GenericNumberUtils.*;
+import static utils.GenericVectorUtils.getZerosVector;
+
 public class Jacobi<T extends Number> {
     Class<T> clazz;
 
@@ -21,19 +24,37 @@ public class Jacobi<T extends Number> {
 //        return x_arr;
 //    }
 
-    public static Double[] countJacobi(Double[][] values, Double[][] vector){
-        Double[] x_arr = new Double[values.length];
-        Arrays.fill(x_arr, 0.0);
+//    public static Double[] countJacobi(Double[][] values, Double[][] vector){
+//        Double[] x_arr = new Double[values.length];
+//        Arrays.fill(x_arr, 0.0);
+//
+//        for (int i = 0; i < 10; i++) {
+//            for (int j = 0; j < values.length; j++){
+//                Double roznica = vector[j][0];
+//                for (int k = 0; k < values[0].length; k++){
+//                    if (k != j)
+//                        roznica -= values[j][k] * x_arr[k];
+//                }
+//
+//                x_arr[j] = (1/values[j][j]) * roznica;
+//            }
+//        }
+//
+//        return x_arr;
+//    }
 
+    public static <T extends Number> T[] countJacobi(T [][] values, T[][] vector){
+       T[] x_arr = getZerosVector(values[0][0],values.length);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < values.length; j++){
-                Double roznica = vector[j][0];
+                T roznica = vector[j][0];
                 for (int k = 0; k < values[0].length; k++){
                     if (k != j)
-                        roznica -= values[j][k] * x_arr[k];
+                        roznica = substract(roznica,multiply(values[j][k], x_arr[k]));
+
                 }
 
-                x_arr[j] = (1/values[j][j]) * roznica;
+                x_arr[j] = multiply(divide(getOne(values[0][0]),values[j][j]),roznica);
             }
         }
 

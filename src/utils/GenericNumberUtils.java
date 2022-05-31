@@ -77,6 +77,19 @@ public class GenericNumberUtils {
         }
     }
 
+
+    public static <T extends Number> T getOne(final T classSample) {
+        if (classSample instanceof Double) {
+            return (T) Double.valueOf(1);
+        } else if (classSample instanceof Float) {
+            return (T) Float.valueOf(1);
+        } else if (classSample instanceof Fraction) {
+            return (T) new Fraction(BigInteger.ONE, BigInteger.ONE);
+        } else {
+            throw new IllegalArgumentException("Numbers must be exact type and float or double");
+        }
+    }
+
     public static <T extends Number> T abs(final T number) {
         if (number instanceof Double) {
             return (T) new Double(Math.abs((double) number));
