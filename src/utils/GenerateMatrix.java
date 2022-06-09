@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class GenerateMatrix {
 
-    public Map<Pair<String, String>, Pair<String, String>> transitionFunction = new HashMap<>(Map.of(
+    public static Map<Pair<String, String>, Pair<String, String>> transitionFunction = new HashMap<>(Map.of(
             new Pair<>("Y", "Y"), new Pair<>("Y", "Y"),
             new Pair<>("N", "Y"), new Pair<>("U", "U"),
             new Pair<>("Y", "N"), new Pair<>("U", "U"),
@@ -20,7 +20,7 @@ public class GenerateMatrix {
             new Pair<>("U", "N"), new Pair<>("N", "N")
     ));
 
-    public ArrayList<String> generateArray(int yVotes, int nVotes, int size){
+    public static ArrayList<String> generateArray(int yVotes, int nVotes, int size){
         int uVotes= size-nVotes-yVotes;
         ArrayList<String> arr = new ArrayList<>();
         for ( int i=0; i<yVotes;i++){
