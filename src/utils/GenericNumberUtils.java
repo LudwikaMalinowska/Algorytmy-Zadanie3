@@ -78,6 +78,18 @@ public class GenericNumberUtils {
     }
 
 
+    public static <T extends Number> T makeNumberOfClass(final T classSample, final Integer Number) {
+        if (classSample instanceof Double) {
+            return (T) Double.valueOf(Number);
+        } else if (classSample instanceof Float) {
+            return (T) Float.valueOf(Number);
+        } else if (classSample instanceof Fraction) {
+            return (T) new Fraction(BigInteger.valueOf(Number), BigInteger.ONE);
+        } else {
+            throw new IllegalArgumentException("Numbers must be exact type and float or double");
+        }
+    }
+
     public static <T extends Number> T getOne(final T classSample) {
         if (classSample instanceof Double) {
             return (T) Double.valueOf(1);

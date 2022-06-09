@@ -5,47 +5,33 @@ import models.Fraction;
 import org.ejml.data.DMatrixSparseCSC;
 import utils.FractionUtils;
 import utils.GenerateMatrix;
+import utils.GenericMatrixUtils;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
+
+import static utils.GenericNumberUtils.*;
 
 public class simpleTests {
     public static void main(String[] args) {
-        int n = 6;
-        int hashN = 2;
-        int hashY = 2;
-        GenerateMatrix matrixUtils = new GenerateMatrix();
-        ArrayList<String> listOfVotes = matrixUtils.generateArray(hashY, hashN, n);
-        ArrayList<Pair<String, String>> votesPairs = createVotesPairs(listOfVotes);
-        Pair<String, String> oldPair = votesPairs.stream().skip(1).findFirst().get();
-        System.out.println(hashN);
-        System.out.println(hashY);
-        Pair<String, String> newPair = makeTransition(oldPair, hashN, hashY);
-        System.out.println(oldPair);
-        System.out.println(newPair);
-        System.out.println(hashN);
-        System.out.println(hashY);
+        Double[][] finalMatrix = createFinalMatrix(0d, 6);
+        prettyPrint(finalMatrix);
     }
 
-    public static Pair<String, String> makeTransition(Pair<String, String> votePair, Integer hashN, Integer hashY){
-        GenerateMatrix matrixUtils = new GenerateMatrix();
-        Pair<String, String> newVotePair = matrixUtils.transitionFunction.get(votePair);
-        if (!votePair.equals(newVotePair)){
-            if (Objects.equals(votePair.getKey(), "N") && Objects.equals(newVotePair.getKey(), "U")) hashN -=1;
-            if (Objects.equals(votePair.getKey(), "U") && Objects.equals(newVotePair.getKey(), "N")) hashN +=1;
-            if (Objects.equals(votePair.getKey(), "Y") && Objects.equals(newVotePair.getKey(), "U")) hashY -=1;
-            if (Objects.equals(votePair.getKey(), "U") && Objects.equals(newVotePair.getKey(), "Y")) hashY +=1;
-            if (Objects.equals(votePair.getValue(), "N") && Objects.equals(newVotePair.getValue(), "U")) hashN -=1;
-            if (Objects.equals(votePair.getValue(), "U") && Objects.equals(newVotePair.getValue(), "N")) hashN +=1;
-            if (Objects.equals(votePair.getValue(), "Y") && Objects.equals(newVotePair.getValue(), "U")) hashY -=1;
-            if (Objects.equals(votePair.getValue(), "U") && Objects.equals(newVotePair.getValue(), "Y")) hashY +=1;
+    private static void prettyPrint(Double[][] array){
+        for (Double[] x : array)
+        {
+            for (Double y : x)
+            {
+                System.out.print(y + " ");
+            }
+            System.out.println();
         }
-        return newVotePair;
     }
 
-    public static ArrayList<Pair<String, String>> createVotesPairs(final ArrayList<String> listOfVotes){
+    public static ArrayList<Pair<String, String>> createVotesPairs(final ArrayList<String> listOfVotes) {
         ArrayList<Pair<String, String>> votePairs = new ArrayList<>();
         for (int i = 0; i < listOfVotes.size(); i++) {
             for (int j = 0; j < listOfVotes.size(); j++) {
@@ -54,6 +40,50 @@ public class simpleTests {
             }
         }
         return votePairs;
+    }
+
+    public static ArrayList<Pair<Integer, Integer>> createVotesOptions(int numberOfVoters) {
+        ArrayList<Pair<Integer, Integer>> voteOptions = new ArrayList<>();
+        for (Integer i = 0; i <= numberOfVoters; i++) {
+            for (Integer j = 0; i + j <= numberOfVoters; j++) {
+                voteOptions.add(new Pair<>(i, j));
+            }
+        }
+        return voteOptions;
+    }
+
+    public static <T extends Number> T[][] createFinalMatrix(T classSample, Integer number) {
+        ArrayList<Pair<Integer, Integer>> listOfOptions = createVotesOptions(number);
+        T[][] resultMatrix = GenericMatrixUtils.getZerosMatrix(classSample, listOfOptions.size());
+        for (int i = 0; i < listOfOptions.size(); i++) {
+            ArrayList<String> listOfVotes = GenerateMatrix.generateArray(listOfOptions.get(i).getKey(), listOfOptions.get(i).getValue(), number);
+            ArrayList<Pair<String, String>> votesPairs = createVotesPairs(listOfVotes);
+            for (Pair<String, String> votePair : votesPairs) {
+                Pair<String, String> newPair = GenerateMatrix.transitionFunction.get(votePair);
+                ArrayList<String> newListOfVotes = new ArrayList<>(listOfVotes);
+                newListOfVotes.remove(votePair.getKey());
+                newListOfVotes.remove(votePair.getValue());
+                newListOfVotes.add(newPair.getValue());
+                newListOfVotes.add(newPair.getValue());
+                long countN = newListOfVotes.stream().filter(e -> Objects.equals(e, "N")).count();
+                long countY = newListOfVotes.stream().filter(e -> Objects.equals(e, "Y")).count();
+                int y = listOfOptions.indexOf(new Pair<>((int) countY, (int) countN));
+                resultMatrix[i][y] = sum(resultMatrix[i][y], getOne(classSample));
+            }
+        }
+       Integer numberToDivide= number *(number-1);
+        T numberOfClass= makeNumberOfClass(classSample,numberToDivide);
+        for (int i = 0; i < listOfOptions.size(); i++) {
+            for (int j = 0; j < listOfOptions.size(); j++){
+                resultMatrix[i][j]=divide(resultMatrix[i][j],numberOfClass);
+            }
+        }
+
+        for (int i = 0; i < listOfOptions.size(); i++) {
+            resultMatrix[i][i]=substract(resultMatrix[i][i],getOne(classSample));
+        }
+
+        return resultMatrix;
     }
 
     public static void SparseMatrix() {
