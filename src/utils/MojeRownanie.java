@@ -114,29 +114,44 @@ public class MojeRownanie<T extends Number> {
     private T[][] k1(int k){
         T[] m = GenericVectorUtils.getZerosVector(values[0][0],values.length -k);
 
-        for (int i = 0; i < m.length; i++){
-//            System.out.println("-----");
-//            System.out.println(i-1);
-            m[i] = divide(values[i+k][k-1],values[k-1][k-1]) ;
+        boolean zero = true;
+//        System.out.println(values[k-1][k-1]);
+        for (int i = k; i < values.length; i++){
+//            System.out.println(values[i][k-1]);
+            if (!values[i][k-1].equals(getZero(values[0][0]))){
+                zero = false;
+            }
         }
+
+        if (!zero) {
+
+
+            for (int i = 0; i < m.length; i++) {
+                m[i] = divide(values[i + k][k - 1], values[k - 1][k - 1]);
+            }
 
 //        System.out.println("m:" + Arrays.toString(m)); //ok
 
 
-        int mi = 0;
-        for (int i = k; i < values.length; i++){
-            for (int j = k-1; j < values[0].length; j++){
+            int mi = 0;
+            for (int i = k; i < values.length; i++) {
+                for (int j = k - 1; j < values[0].length; j++) {
 //                System.out.printf("[%d][%d]", i, j);
 //                    System.out.println(mi);
-                T val = substract(values[i][j],(multiply(values[k-1][j],m[mi])));
-                values[i][j] = val;
+                    T val = substract(values[i][j], (multiply(values[k - 1][j], m[mi])));
+                    values[i][j] = val;
+                }
+
+                T valB = substract(b[i][0], multiply(m[mi], b[k - 1][0]));
+                b[i][0] = valB;
+
+                mi++;
             }
 
-           T valB = substract(b[i][0],multiply(m[mi], b[k-1][0]));
-            b[i][0] = valB;
-
-            mi++;
         }
+//        else {
+//            System.out.println("skip");
+//        }
 
         return b;
     }
@@ -157,7 +172,15 @@ public class MojeRownanie<T extends Number> {
                 b1[k][0] = b1[p][0];
                 b1[p][0] = temp_bk;
             }
+//            System.out.println("bf");
+//            for (T[] row : values) {
+//                System.out.println(Arrays.toString(row));
+//            }
             b1 = this.k1(k+1);
+//            System.out.println("after");
+//            for (T[] row : values) {
+//                System.out.println(Arrays.toString(row));
+//            }
         }
 
         return b1;
