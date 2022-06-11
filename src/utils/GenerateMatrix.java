@@ -1,10 +1,8 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> 2a0783fe2d5336c3cfd33d0aa69e0d744881d7df
 package utils;
 
 import javafx.util.Pair;
+import utils.GenericNumberUtils;
 
 import java.util.*;
 
@@ -134,7 +132,3 @@ public class GenerateMatrix {
 
     }*/
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 2a0783fe2d5336c3cfd33d0aa69e0d744881d7df

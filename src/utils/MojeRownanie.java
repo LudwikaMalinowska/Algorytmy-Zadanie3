@@ -148,7 +148,7 @@ public class MojeRownanie<T extends Number> {
                 mi++;
             }
 
-        }
+
 //        else {
 //            System.out.println("skip");
 //        }
