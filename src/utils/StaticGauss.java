@@ -1,5 +1,9 @@
 package utils;
 
+import models.Fraction;
+
+import java.math.BigInteger;
+
 public class StaticGauss<T extends Number> {
 
     public static Double[][] solveGaussPG(Double[][] values,
@@ -17,6 +21,16 @@ public class StaticGauss<T extends Number> {
         MojaMacierz<Float> mm1 = new MojaMacierz<>(values, Float.class);
         MojeRownanie<Float> mr1 = new MojeRownanie<>(mm1, b, Float.class);
         Float[][] result = mr1.solveGaussPG();
+
+        return result;
+    }
+
+
+    public static Fraction[][] solveGaussPG(Fraction[][] values,
+                                            Fraction[][] b){
+        MojaMacierz<Fraction> mm1 = new MojaMacierz<>(values, Fraction.class);
+        MojeRownanie<Fraction> mr1 = new MojeRownanie<>(mm1, b, Fraction.class);
+        Fraction[][] result = mr1.solveGaussPG();
 
         return result;
     }

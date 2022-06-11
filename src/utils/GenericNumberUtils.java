@@ -42,6 +42,9 @@ public class GenericNumberUtils {
     }
 
     public static <T extends Number> T divide(final T number1, final T number2) {
+       /*if (number2.equals(GenericNumberUtils.getZero(number1))) {
+           return GenericNumberUtils.getZero(number1);
+       }*/
         if (number1 instanceof Double && number2 instanceof Double) {
             return (T) Double.valueOf(number1.doubleValue() / number2.doubleValue());
         } else if (number1 instanceof Float && number2 instanceof Float) {
@@ -97,6 +100,18 @@ public class GenericNumberUtils {
             return (T) Float.valueOf(1);
         } else if (classSample instanceof Fraction) {
             return (T) new Fraction(BigInteger.ONE, BigInteger.ONE);
+        } else {
+            throw new IllegalArgumentException("Numbers must be exact type and float or double");
+        }
+    }
+
+    public static <T extends Number> T getMinusOne(final T classSample) {
+        if (classSample instanceof Double) {
+            return (T) Double.valueOf(-1);
+        } else if (classSample instanceof Float) {
+            return (T) Float.valueOf(-1);
+        } else if (classSample instanceof Fraction) {
+            return (T) new Fraction(new BigInteger("-1"), BigInteger.ONE);
         } else {
             throw new IllegalArgumentException("Numbers must be exact type and float or double");
         }

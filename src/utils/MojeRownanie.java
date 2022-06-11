@@ -88,7 +88,13 @@ public class MojeRownanie<T extends Number> {
         T Ann = values[i-1][j-1];
         //Xn
         // zamiast convert to type dać moje generyczne operacje
-        x[x.length-1][0] =divide(Bn,Ann);
+
+
+        x[x.length - 1][0] = divide(Bn, Ann);
+
+
+
+
         // to jest ten krok gdzie przechodzi już mając wynik ostatniego x i wylicza
         for (int k = x.length-2; k >= 0 ; k--){
 //            System.out.println(k);
@@ -117,7 +123,11 @@ public class MojeRownanie<T extends Number> {
         for (int i = 0; i < m.length; i++){
 //            System.out.println("-----");
 //            System.out.println(i-1);
-            m[i] = divide(values[i+k][k-1],values[k-1][k-1]) ;
+//            if (values[k - 1][k - 1].equals(GenericNumberUtils.getZero(values[k - 1][k - 1]))) {
+//                continue;
+//            }
+            m[i] = divide(values[i + k][k - 1], values[k - 1][k - 1]);
+
         }
 
 //        System.out.println("m:" + Arrays.toString(m)); //ok
@@ -146,6 +156,9 @@ public class MojeRownanie<T extends Number> {
 
         T[][] b1 = b;
         for (int k = 0; k < values.length-1; k++){
+            //System.out.print("Iter");
+            //System.out.println(k);
+            //prettyPrint(b1);
             int p = maxCol(k);
             if (k != p){
                 //zamień miejscami
@@ -163,17 +176,38 @@ public class MojeRownanie<T extends Number> {
         return b1;
     }
 
+    public static <T extends Number> void prettyPrint(T[][] array) {
+        for (T[] x : array) {
+            for (T y : x) {
+                System.out.print(y + " ");
+            }
+            System.out.println();
+        }
+    }
 
     public T[][] solveGaussPG(){
+        for (int i = 0; i < values.length; i++) {
+            if (GenericNumberUtils.getZero(values[i][i]).equals(values[i][i])) {
+                throw new IllegalArgumentException("Zero value on teh diagonal. ");
+            }
+        }
         T[][] b1 = this.gaussPGkrok1();
+        prettyPrint(values);
         T[][] result = this.gaussKrok2();
 
         return result;
     }
 
+//    public T[][] solveGaussPG2(){
+//
+//
+//
+//        return result;
+//    }
+
     private int maxCol(int col){
         int maxCol = col;
-        T max = values[0][0];
+        T max = values[0][col];
         for (int i = col; i < values[0].length; i++){
             if (isGreater(abs(values[i][col]), max) ){
                 maxCol = i;

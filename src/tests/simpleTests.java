@@ -1,54 +1,69 @@
 package tests;
 
-import javafx.util.Pair;
 import models.Fraction;
 import org.ejml.data.DMatrixSparseCSC;
+import utils.AnotherGauss;
 import utils.FractionUtils;
 import utils.GenerateMatrix;
-import utils.GenericMatrixUtils;
+import utils.StaticGauss;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
-
-import static utils.GenericNumberUtils.*;
 
 public class simpleTests {
     public static void main(String[] args) {
-//        Double[][] finalMatrix = GenerateMatrix.createFinalMatrix(0d, 6);
-        Fraction [][] finalMatrixFraction = GenerateMatrix.createFinalMatrix(new Fraction(BigInteger.ONE,BigInteger.ONE),6);
-        prettyPrintFraction(finalMatrixFraction);
-        Fraction [] finalVectorFraction = GenerateMatrix.createFinalVector(new Fraction(BigInteger.ONE,BigInteger.ONE),6);
-        System.out.println(Arrays.toString(finalVectorFraction));
+        Double[][] finalMatrix = GenerateMatrix.createFinalMatrix(0d, 3);
+        prettyPrint(finalMatrix);
+//        Fraction [][] finalMatrixFraction = GenerateMatrix.createFinalMatrix(new Fraction(BigInteger.ONE,BigInteger.ONE),6);
+//        prettyPrintFraction(finalMatrixFraction);
+        //    Fraction [][] finalVectorFraction = GenerateMatrix.createFinalVector(new Fraction(BigInteger.ONE,BigInteger.ONE),6);
+//        System.out.println(Arrays.toString(finalVectorFraction));
+//        Fraction [][] result=StaticGauss.solveGaussPG(finalMatrixFraction,finalVectorFraction);
+
+        Double[][] finalVector = GenerateMatrix.createFinalVector(0d, 4);
+
+//        Double[][] test = {
+//                {0d, 0d, 0d, 0d, 5d},
+//                {0d, 0d, 0d, 0d, 0d},
+//                {0d, 0d, 5d, 0d, 0d},
+//                {0d, 2d, 0d, 5d, 0d},
+//                {0d, 0d, 7d, 0d, 0d}
+//        };
+//        Double[][] test2 = {
+//                {0d},
+//                {0d},
+//                {0d},
+//                {0d},
+//                {-1d}
+//        };
+//        Double[] testVector = GenerateMatrix.createFinalVector(0d, 3);
+        Double[][] result = StaticGauss.solveGaussPG(finalMatrix, finalVector);
+
+//        Double[] result2 = AnotherGauss.gaussElimination(finalMatrix, testVector);
+//        prettyPrint(result2);
 //        prettyPrint(finalMatrix);
 //        Double[] finalVector= GenerateMatrix.createFinalVector(0d, 6);
-//        System.out.println(Arrays.toString(finalVector));
+        System.out.println(Arrays.toString(result));
     }
 
-    private static void prettyPrint(Double[][] array){
-        for (Double[] x : array)
-        {
-            for (Double y : x)
-            {
-                System.out.print(y + " ");
+    public static void prettyPrint(Double[][] array) {
+        for (Double[] x : array) {
+            for (Double y : x) {
+                System.out.print(String.format("%.2f", y) + " ");
             }
             System.out.println();
         }
     }
 
 
-    private static void prettyPrintFraction(Fraction[][] array){
-        for (Fraction[] x : array)
-        {
-            for (Fraction y : x)
-            {
+    private static void prettyPrintFraction(Fraction[][] array) {
+        for (Fraction[] x : array) {
+            for (Fraction y : x) {
                 System.out.print(y + " ");
             }
             System.out.println();
         }
     }
-
 
 
     public static void SparseMatrix() {
