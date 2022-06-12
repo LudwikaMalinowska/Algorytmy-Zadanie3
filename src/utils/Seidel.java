@@ -20,7 +20,7 @@ public class Seidel<T extends Number> {
         for (int i = 0; ; i++) {
             //            System.out.println(i);
             T[][] x_arr_prev = Arrays.copyOf(x_arr, x_arr.length);
-            if (i >= 10) {
+            if (i >= 5) {
                 T norma = testError(x_arr, x_arr_prev);
 
                 if (isGreater(dokladnosc, norma)){
