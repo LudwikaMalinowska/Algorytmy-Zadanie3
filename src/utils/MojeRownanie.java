@@ -159,18 +159,17 @@ public class MojeRownanie<T extends Number> {
 
     private T[][] gaussPGkrok1(){
 
-        T[][] b1 = b;
+        T[][] b1 = GenericMatrixUtils.cloneMatrix(b);
+
         for (int k = 0; k < values.length-1; k++){
-            //System.out.print("Iter");
-            //System.out.println(k);
-            //prettyPrint(b1);
             int p = maxCol(k);
             if (k != p){
-                //zamień miejscami
                 T[] rowK = values[k];
                 T[] rowP = values[p];
+
                 values[k] = rowP;
                 values[p] = rowK;
+
                 T temp_bk = b1[k][0];
                 b1[k][0] = b1[p][0];
                 b1[p][0] = temp_bk;
@@ -185,33 +184,29 @@ public class MojeRownanie<T extends Number> {
 //                System.out.println(Arrays.toString(row));
 //            }
         }
-
+//        System.exit(0);
         return b1;
     }
 
     public static <T extends Number> void prettyPrint(T[][] array) {
         for (T[] x : array) {
             for (T y : x) {
-                System.out.print(y + " ");
+                System.out.print(String.format("%.2f", y) + " ");
             }
             System.out.println();
         }
     }
 
     public T[][] solveGaussPG(){
-        for (int i = 0; i < values.length; i++) {
-            if (GenericNumberUtils.getZero(values[i][i]).equals(values[i][i])) {
-                throw new IllegalArgumentException("Zero value on teh diagonal. ");
-            }
-        }
         T[][] b1 = this.gaussPGkrok1();
-        prettyPrint(values);
+
         T[][] result = this.gaussKrok2();
 
         return result;
     }
 
 //    public T[][] solveGaussPG2(){
+//        T[][] vectorCopy = b;
 //
 //
 //
@@ -220,9 +215,9 @@ public class MojeRownanie<T extends Number> {
 
     private int maxCol(int col){
         int maxCol = col;
-        T max = values[0][col];
+        T absMax = abs(values[0][col]);
         for (int i = col; i < values[0].length; i++){
-            if (isGreater(abs(values[i][col]), max) ){
+            if (isGreater(abs(values[i][col]), absMax) ){
                 maxCol = i;
             }
         }
