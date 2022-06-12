@@ -3,6 +3,7 @@ package utils;
 import java.util.Arrays;
 import static utils.GenericNumberUtils.*;
 import static utils.GenericMatrixUtils.getZerosMatrix;
+import static utils.GenericMatrixUtils.testError;
 
 public class Jacobi<T extends Number> {
 
@@ -10,19 +11,16 @@ public class Jacobi<T extends Number> {
     public static <T extends Number> T[][] countJacobi(T [][] values, T[][] vector){
        T[][] x_arr = getZerosMatrix(values[0][0],values.length, 1);
        T[][] x_arr_prev = null;
-       Double dokladnosc = Math.pow(10, -14);
-       T norma = getZero(values[0][0]);
+//       Double dokladnosc = Math.pow(10, -14);
+       T dokladnosc = (T) convertToType(values[0][0].getClass(),
+               String.valueOf(Math.pow(10, -14)));
 
         for (int i = 0; ; i++) {
-            System.out.println(i);
-//        while (true){
-            if (x_arr_prev != null && i > 1) {
-//                for (int j = 0; j < x_arr.length; j++){
-//                    T roznica = abs(substract(x_arr[0][0],x_arr_prev[0][0]));
-//                    norma = sum(norma, roznica);
-//                }
+//            System.out.println(i);
+            if (x_arr_prev != null && i >= 10) {
+                T norma = testError(x_arr, x_arr_prev);
 
-                if (!isGreater(norma, dokladnosc)){
+                if (isGreater(dokladnosc, norma)){
                     break;
                 }
             }
@@ -41,6 +39,15 @@ public class Jacobi<T extends Number> {
         }
 
         return x_arr;
+    }
+
+    public static <T extends Number> T convertToType(Class<T> clazz,String str) {
+        try {
+            return clazz.getConstructor(String.class).newInstance(str);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
