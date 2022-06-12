@@ -104,7 +104,7 @@ public class GenerateMatrix {
         }
 
         for (int i = 0; i < listOfOptions.size(); i++) {
-            if (resultMatrix[i][i].equals(GenericNumberUtils.getOne(resultMatrix[i][i]))) {
+            if (GenericNumberUtils.isEqual(resultMatrix[i][i], getOne(resultMatrix[i][i]))) {
                 resultMatrix[i][i] = GenericNumberUtils.getMinusOne(resultMatrix[i][i]);
             } else {
                 resultMatrix[i][i] = substract(resultMatrix[i][i], getOne(classSample));

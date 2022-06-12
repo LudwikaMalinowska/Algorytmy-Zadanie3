@@ -141,4 +141,16 @@ public class GenericNumberUtils {
             throw new IllegalArgumentException("Numbers must be exact type and float or double");
         }
     }
+
+    public static <T extends Number> boolean isEqual(final T number1, final T number2) {
+        if (number1 instanceof Double && number2 instanceof Double) {
+            return number1.doubleValue() == number2.doubleValue();
+        } else if (number1 instanceof Float && number2 instanceof Float) {
+            return number1.floatValue() == number2.floatValue();
+        } else if (number1 instanceof Fraction && number2 instanceof Fraction) {
+            return FractionUtils.isEqual(((Fraction) number1), ((Fraction) number2));
+        } else {
+            throw new IllegalArgumentException("Numbers must be exact type and float or double");
+        }
+    }
 }

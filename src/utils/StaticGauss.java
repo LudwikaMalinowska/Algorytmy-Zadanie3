@@ -16,6 +16,16 @@ public class StaticGauss<T extends Number> {
     }
 
 
+    public static <T extends Number> T[][] solveGaussPG(T[][] values,
+                                          T[][] b, T classSample){
+        MojaMacierz<T> mm1 = new MojaMacierz<>(values, (Class<T>) classSample.getClass());
+        MojeRownanie<T> mr1 = new MojeRownanie<>(mm1, b, (Class<T>) classSample.getClass());
+       T[][] result = mr1.solveGaussPG();
+
+        return result;
+    }
+
+
     public static Float[][] solveGaussPG(Float[][] values,
                                           Float[][] b){
         MojaMacierz<Float> mm1 = new MojaMacierz<>(values, Float.class);
