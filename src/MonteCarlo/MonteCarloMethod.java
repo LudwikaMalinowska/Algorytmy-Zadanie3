@@ -1,9 +1,11 @@
 package MonteCarlo;
 
 import javafx.util.Pair;
+import utils.GenericNumberUtils;
 
 import java.util.ArrayList;
 
+import static utils.GenerateMatrix.createVotesOptions;
 import static utils.GenerateMatrix.transitionFunction;
 
 public class MonteCarloMethod {
@@ -42,18 +44,21 @@ public class MonteCarloMethod {
         return false;
     }
 
-    public Double propability(ArrayList<String> votes){
-        double yesVotes=0d;
-        double allVotes=votes.size();
+    public <T extends Number> T propability(ArrayList<String> votes,T classSample){
+        T yesVotes = GenericNumberUtils.getZero(classSample);
+        T allVotes= GenericNumberUtils.makeNumberOfClass(classSample, votes.size());
         for ( String vote: votes){
-            if(vote.equals("Y")) yesVotes++;
+            if(vote.equals("Y")) {
+               yesVotes= GenericNumberUtils.sum(yesVotes,GenericNumberUtils.getOne(classSample));
+            }
+
         }
-        return (yesVotes/allVotes);
+        return GenericNumberUtils.divide(yesVotes,allVotes);
 
 
     }
 
-    public Double simulation(){
+    public <T extends Number> T simulation(T classSample){
         for(int i = 0; i< IterationsNumber; i++){
             ArrayList<Voter> voters = generateVoters();
             while (checkIfStateIsNotStable(voters)){
@@ -68,6 +73,9 @@ public class MonteCarloMethod {
             }
         this.simulationResult.add(voters.get(0).getVote());
         }
-        return propability(simulationResult);
+        return propability(simulationResult,classSample);
     }
+
+
+
 }

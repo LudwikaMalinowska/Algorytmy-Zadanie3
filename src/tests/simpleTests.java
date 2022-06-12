@@ -42,7 +42,9 @@ public class simpleTests {
         };
 //        Double[] testVector = GenerateMatrix.createFinalVector(0d, 3);
        //Double[][] result = MatrixSolvers.solveMatrixGaussPg(3,2,6,0d);
-       Fraction result = MatrixSolvers.solveMatrixGaussPg(2,2,7,new Fraction(BigInteger.ONE,BigInteger.ONE));
+//       Fraction result = MatrixSolvers.solveMatrixGaussPg(2,2,7,new Fraction(BigInteger.ONE,BigInteger.ONE));
+        Fraction result = MatrixSolvers.solveMatrixGaussPgAndCountErrors(2,2,7,new Fraction(BigInteger.ONE,BigInteger.ONE),100);
+
         System.out.println(result);
 //        System.out.println("RESULTS");
 //        prettyPrint(result);
