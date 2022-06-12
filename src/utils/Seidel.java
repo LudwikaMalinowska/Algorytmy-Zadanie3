@@ -3,23 +3,23 @@ package utils;
 import java.util.Arrays;
 import static utils.GenericNumberUtils.*;
 import static utils.GenericNumberUtils.getOne;
-import static utils.GenericVectorUtils.getZerosVector;
+import static utils.GenericMatrixUtils.getZerosMatrix;
 
 public class Seidel<T extends Number> {
 
-    public static <T extends Number> T[] countSeidel(T [][] values, T[][] vector){
-        T[] x_arr = getZerosVector(values[0][0],values.length);
+    public static <T extends Number> T[][] countSeidel(T [][] values, T[][] vector){
+        T[][] x_arr = getZerosMatrix(values[0][0],values.length, 1);
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < values.length; j++){
                 T roznica = vector[j][0];
                 for (int k = 0; k < values[0].length; k++){
                     if (k != j)
-                        roznica = substract(roznica,multiply(values[j][k], x_arr[k]));
+                        roznica = substract(roznica,multiply(values[j][k], x_arr[k][0]));
 
                 }
 
-                x_arr[j] = multiply(divide(getOne(values[0][0]),values[j][j]),roznica);
+                x_arr[j][0] = multiply(divide(getOne(values[0][0]),values[j][j]),roznica);
             }
         }
 
@@ -39,7 +39,7 @@ public class Seidel<T extends Number> {
                 {-11.0},
                 {15.0},
         };
-        Double[] result = Seidel.countSeidel(arr_a, arr_y);
+        Double[][] result = Seidel.countSeidel(arr_a, arr_y);
         System.out.println(Arrays.toString(result));
     }
 }
