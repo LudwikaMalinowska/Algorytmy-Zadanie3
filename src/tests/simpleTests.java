@@ -41,18 +41,19 @@ public class simpleTests {
                 {0d},{0d},{-1d}
         };
 //        Double[] testVector = GenerateMatrix.createFinalVector(0d, 3);
-//        Double[][] result = StaticGauss.solveGaussPG(finalMatrix, finalVector);
+       //Double[][] result = MatrixSolvers.solveMatrixGaussPg(3,2,6,0d);
+       Fraction[][] result = MatrixSolvers.solveMatrixGaussPg(3,1,5,new Fraction(BigInteger.ONE,BigInteger.ONE));
 
 //        System.out.println("RESULTS");
-//        prettyPrint(result);
+        prettyPrint(result);
 
-        MonteCarloMethod monteCarlo = new MonteCarloMethod(2,12,20,10000);
-        System.out.println(monteCarlo.simulation());
+//        MonteCarloMethod monteCarlo = new MonteCarloMethod(2,12,20,10000);
+//        System.out.println(monteCarlo.simulation());
     }
 
-    public static void prettyPrint(Double[][] array) {
-        for (Double[] x : array) {
-            for (Double y : x) {
+    public static <T extends Number> void prettyPrint(T[][] array) {
+        for (T[] x : array) {
+            for (T y : x) {
                 System.out.print(String.format("%.2f", y) + " ");
             }
             System.out.println();

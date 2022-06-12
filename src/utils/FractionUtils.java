@@ -51,4 +51,9 @@ public class FractionUtils {
             return false;
         }
     }
+
+    public static boolean isEqual(final Fraction first, final Fraction second) {
+        return first.getDenominator().equals(second.getDenominator())
+                && first.getNominator().equals(second.getNominator());
+    }
 }

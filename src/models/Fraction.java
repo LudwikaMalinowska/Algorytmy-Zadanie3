@@ -19,7 +19,7 @@ public class Fraction extends Number {
             denominator = BigInteger.ONE;
         }
 
-        if (nominator.compareTo(BigInteger.ZERO) < 0 && denominator.compareTo(BigInteger.ZERO) < 0){
+        if (nominator.compareTo(BigInteger.ZERO) < 0 && denominator.compareTo(BigInteger.ZERO) < 0) {
             nominator = nominator.abs();
             denominator = denominator.abs();
         } else if (nominator.compareTo(BigInteger.ZERO) >= 0 && denominator.compareTo(BigInteger.ZERO) < 0) {
@@ -76,7 +76,7 @@ public class Fraction extends Number {
         return first;
     }
 
-    public Fraction abs(){
+    public Fraction abs() {
         return new Fraction(nominator.abs(), denominator);
     }
 }
