@@ -5,6 +5,7 @@ import utils.GenericNumberUtils;
 
 import java.util.ArrayList;
 
+import static utils.GenerateMatrix.createVotesOptions;
 import static utils.GenerateMatrix.transitionFunction;
 
 public class MonteCarloMethod {
@@ -74,4 +75,7 @@ public class MonteCarloMethod {
         }
         return propability(simulationResult,classSample);
     }
+
+
+
 }

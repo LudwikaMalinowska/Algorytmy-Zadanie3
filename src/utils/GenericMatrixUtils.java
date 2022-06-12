@@ -2,6 +2,8 @@ package utils;
 
 import models.Fraction;
 
+import static utils.GenericNumberUtils.isGreater;
+
 public class GenericMatrixUtils {
     public static <T extends Number> T[][] getZerosMatrix(final T classSample,
                                                           final int length) {
@@ -65,4 +67,28 @@ public class GenericMatrixUtils {
             throw new IllegalArgumentException("Numbers must be exact type and float or double");
         }
     }
+
+    private static <T extends Number> T[][] substract(T[][] matrix1, T[][] matrix2) {
+        T[][] resultVector = getZerosMatrix(matrix1[0][0],matrix1.length,1);
+        for (int i = 0; i < matrix1.length; i++) {
+            resultVector[i][0] = GenericNumberUtils.substract(matrix1[i][0],matrix2[i][0]);
+        }
+        return resultVector;
+    }
+
+
+    public static <T extends Number> T testError(T[][] matrix1, T[][] matrix2) {
+        T[][] errors = substract(matrix1,matrix2);
+        for (int i = 0; i < errors.length; i++) {
+            errors[i][0] = GenericNumberUtils.abs(errors[i][0]);
+        }
+        T maxElement = errors[0][0];
+        for (T[] error : errors) {
+            if (isGreater(error[0], maxElement)) {
+                maxElement = error[0];
+            }
+        }
+        return maxElement;
+    }
+
 }
