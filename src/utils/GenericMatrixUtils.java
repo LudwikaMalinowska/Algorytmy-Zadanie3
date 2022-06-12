@@ -28,9 +28,11 @@ public class GenericMatrixUtils {
 
     public static <T extends Number> T[][] cloneMatrix(final T[][] values) {
         final int length = values.length;
-        T[][] clonedValues = createMatrix(values[0][0], length);
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
+        final int length2 = values[0].length;
+        T[][] clonedValues = createMatrix(values[0][0], length2, length);
+
+        for (int i = 0; i < clonedValues.length; i++) {
+            for (int j = 0; j < clonedValues[0].length; j++) {
                 clonedValues[i][j] = GenericNumberUtils.clone(values[i][j]);
             }
         }

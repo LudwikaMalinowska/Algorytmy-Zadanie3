@@ -29,21 +29,27 @@ public class simpleTests {
 //                {0d, 2d, 0d, 5d, 0d},
 //                {0d, 0d, 7d, 0d, 0d}
 //        };
-//        Double[][] test2 = {
-//                {0d},
-//                {0d},
-//                {0d},
-//                {0d},
-//                {-1d}
-//        };
+        Double[][] test2 = {
+                {0d},
+                {0d},
+                {0d},
+                {0d},
+                {0d},
+                {0d},
+                {0d},
+                {0d},{0d},{-1d}
+        };
 //        Double[] testVector = GenerateMatrix.createFinalVector(0d, 3);
-        Double[][] result = StaticGauss.solveGaussPG(finalMatrix, finalVector);
+        Double[][] result = StaticGauss.solveGaussPG(finalMatrix, test2);
+
+        System.out.println("RESULTS");
+        prettyPrint(result);
 
 //        Double[] result2 = AnotherGauss.gaussElimination(finalMatrix, testVector);
 //        prettyPrint(result2);
 //        prettyPrint(finalMatrix);
 //        Double[] finalVector= GenerateMatrix.createFinalVector(0d, 6);
-        System.out.println(Arrays.toString(result));
+        //System.out.println(Arrays.toString(result));
     }
 
     public static void prettyPrint(Double[][] array) {
