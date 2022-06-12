@@ -2,14 +2,14 @@ package utils;
 
 import java.util.Arrays;
 import static utils.GenericNumberUtils.*;
-import static utils.GenericVectorUtils.getZerosVector;
+import static utils.GenericMatrixUtils.getZerosMatrix;
 
 public class Jacobi<T extends Number> {
 
 
-    public static <T extends Number> T[] countJacobi(T [][] values, T[][] vector){
-       T[] x_arr = getZerosVector(values[0][0],values.length);
-       T[] x_arr_prev;
+    public static <T extends Number> T[][] countJacobi(T [][] values, T[][] vector){
+       T[][] x_arr = getZerosMatrix(values[0][0],values.length, 1);
+       T[][] x_arr_prev;
 
         for (int i = 0; i < 10; i++) {
             x_arr_prev = Arrays.copyOf(x_arr, x_arr.length);
@@ -17,11 +17,11 @@ public class Jacobi<T extends Number> {
                 T roznica = vector[j][0];
                 for (int k = 0; k < values[0].length; k++){
                     if (k != j)
-                        roznica = substract(roznica,multiply(values[j][k], x_arr_prev[k]));
+                        roznica = substract(roznica,multiply(values[j][k], x_arr_prev[k][0]));
 
                 }
 
-                x_arr[j] = multiply(divide(getOne(values[0][0]),values[j][j]),roznica);
+                x_arr[j][0] = multiply(divide(getOne(values[0][0]),values[j][j]),roznica);
             }
         }
 
@@ -42,7 +42,7 @@ public class Jacobi<T extends Number> {
                 {-11.0},
                 {15.0},
         };
-        Double[] result = Jacobi.countJacobi(arr_a, arr_y);
+        Double[][] result = Jacobi.countJacobi(arr_a, arr_y);
         System.out.println(Arrays.toString(result));
     }
 }
