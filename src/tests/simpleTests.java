@@ -1,5 +1,6 @@
 package tests;
 
+import MonteCarlo.MonteCarloMethod;
 import models.Fraction;
 import org.ejml.data.DMatrixSparseCSC;
 import utils.AnotherGauss;
@@ -12,15 +13,15 @@ import java.util.Arrays;
 
 public class simpleTests {
     public static void main(String[] args) {
-        Double[][] finalMatrix = GenerateMatrix.createFinalMatrix(0d, 3);
-        prettyPrint(finalMatrix);
+//        Double[][] finalMatrix = GenerateMatrix.createFinalMatrix(0d, 3);
+//        prettyPrint(finalMatrix);
 //        Fraction [][] finalMatrixFraction = GenerateMatrix.createFinalMatrix(new Fraction(BigInteger.ONE,BigInteger.ONE),6);
 //        prettyPrintFraction(finalMatrixFraction);
         //    Fraction [][] finalVectorFraction = GenerateMatrix.createFinalVector(new Fraction(BigInteger.ONE,BigInteger.ONE),6);
 //        System.out.println(Arrays.toString(finalVectorFraction));
 //        Fraction [][] result=StaticGauss.solveGaussPG(finalMatrixFraction,finalVectorFraction);
 
-        Double[][] finalVector = GenerateMatrix.createFinalVector(0d, 3);
+//        Double[][] finalVector = GenerateMatrix.createFinalVector(0d, 3);
 
 //        Double[][] test = {
 //                {0d, 0d, 0d, 0d, 5d},
@@ -40,16 +41,13 @@ public class simpleTests {
                 {0d},{0d},{-1d}
         };
 //        Double[] testVector = GenerateMatrix.createFinalVector(0d, 3);
-        Double[][] result = StaticGauss.solveGaussPG(finalMatrix, finalVector);
+//        Double[][] result = StaticGauss.solveGaussPG(finalMatrix, finalVector);
 
-        System.out.println("RESULTS");
-        prettyPrint(result);
+//        System.out.println("RESULTS");
+//        prettyPrint(result);
 
-//        Double[] result2 = AnotherGauss.gaussElimination(finalMatrix, testVector);
-//        prettyPrint(result2);
-//        prettyPrint(finalMatrix);
-//        Double[] finalVector= GenerateMatrix.createFinalVector(0d, 6);
-        //System.out.println(Arrays.toString(result));
+        MonteCarloMethod monteCarlo = new MonteCarloMethod(2,12,20,10000);
+        System.out.println(monteCarlo.simulation());
     }
 
     public static void prettyPrint(Double[][] array) {
