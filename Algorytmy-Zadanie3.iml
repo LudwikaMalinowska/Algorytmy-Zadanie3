@@ -10,5 +10,6 @@
     <orderEntry type="library" name="org.ejml:all:0.30" level="application" />
     <orderEntry type="library" name="org.ejml:ejml-dsparse:0.41" level="application" />
     <orderEntry type="library" name="org.openjfx:javafx-base:12-ea+4" level="application" />
+    <orderEntry type="library" name="opencsv" level="application" />
   </component>
 </module>
