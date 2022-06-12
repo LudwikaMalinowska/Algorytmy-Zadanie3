@@ -9,10 +9,25 @@ public class Jacobi<T extends Number> {
 
     public static <T extends Number> T[][] countJacobi(T [][] values, T[][] vector){
        T[][] x_arr = getZerosMatrix(values[0][0],values.length, 1);
-       T[][] x_arr_prev;
+       T[][] x_arr_prev = null;
+       Double dokladnosc = Math.pow(10, -14);
+       T norma = getZero(values[0][0]);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; ; i++) {
+            System.out.println(i);
+//        while (true){
+            if (x_arr_prev != null && i > 1) {
+//                for (int j = 0; j < x_arr.length; j++){
+//                    T roznica = abs(substract(x_arr[0][0],x_arr_prev[0][0]));
+//                    norma = sum(norma, roznica);
+//                }
+
+                if (!isGreater(norma, dokladnosc)){
+                    break;
+                }
+            }
             x_arr_prev = Arrays.copyOf(x_arr, x_arr.length);
+
             for (int j = 0; j < values.length; j++){
                 T roznica = vector[j][0];
                 for (int k = 0; k < values[0].length; k++){
@@ -43,6 +58,10 @@ public class Jacobi<T extends Number> {
                 {15.0},
         };
         Double[][] result = Jacobi.countJacobi(arr_a, arr_y);
-        System.out.println(Arrays.toString(result));
+//        System.out.println(Arrays.toString(result));
+
+        for (Double[] row : result){
+            System.out.println(Arrays.toString(row));
+        }
     }
 }
