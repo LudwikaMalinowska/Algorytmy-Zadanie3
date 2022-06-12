@@ -20,7 +20,7 @@ public class simpleTests {
 //        System.out.println(Arrays.toString(finalVectorFraction));
 //        Fraction [][] result=StaticGauss.solveGaussPG(finalMatrixFraction,finalVectorFraction);
 
-        Double[][] finalVector = GenerateMatrix.createFinalVector(0d, 4);
+        Double[][] finalVector = GenerateMatrix.createFinalVector(0d, 3);
 
 //        Double[][] test = {
 //                {0d, 0d, 0d, 0d, 5d},
@@ -40,7 +40,7 @@ public class simpleTests {
                 {0d},{0d},{-1d}
         };
 //        Double[] testVector = GenerateMatrix.createFinalVector(0d, 3);
-        Double[][] result = StaticGauss.solveGaussPG(finalMatrix, test2);
+        Double[][] result = StaticGauss.solveGaussPG(finalMatrix, finalVector);
 
         System.out.println("RESULTS");
         prettyPrint(result);
