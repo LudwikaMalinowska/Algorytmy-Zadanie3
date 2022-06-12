@@ -42,10 +42,10 @@ public class simpleTests {
         };
 //        Double[] testVector = GenerateMatrix.createFinalVector(0d, 3);
        //Double[][] result = MatrixSolvers.solveMatrixGaussPg(3,2,6,0d);
-       Fraction[][] result = MatrixSolvers.solveMatrixGaussPg(3,1,5,new Fraction(BigInteger.ONE,BigInteger.ONE));
-
+       Fraction result = MatrixSolvers.solveMatrixGaussPg(2,2,7,new Fraction(BigInteger.ONE,BigInteger.ONE));
+        System.out.println(result);
 //        System.out.println("RESULTS");
-        prettyPrint(result);
+//        prettyPrint(result);
 
 //        MonteCarloMethod monteCarlo = new MonteCarloMethod(2,12,20,10000);
 //        System.out.println(monteCarlo.simulation());
