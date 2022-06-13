@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class SparseTest {
     public static void main(String[] args) {
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter("sparse_gauss.csv", false),
+            CSVWriter writer = new CSVWriter(new FileWriter("sparse_gauss2.csv", false),
                     ';',
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
@@ -30,7 +30,7 @@ public class SparseTest {
 
             };
             writer.writeNext(naglowki);
-            for (int i = 10; i <=40; i += 10) {
+            for (int i = 60; i <=60; i += 10) {
                 TestResult<Float> testResultGaussFloat =
                         solveMatrixGaussSparseAndCountErrors(i,new Float(1),1000);
                 TestResult<Double> testResultGaussDouble =
