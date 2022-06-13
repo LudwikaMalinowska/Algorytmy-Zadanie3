@@ -2,6 +2,8 @@ package utils;
 
 import models.Fraction;
 
+import java.util.Arrays;
+
 import static utils.GenericNumberUtils.isGreater;
 
 public class GenericMatrixUtils {
@@ -83,8 +85,36 @@ public class GenericMatrixUtils {
             errors[i][0] = GenericNumberUtils.abs(errors[i][0]);
         }
         T maxElement = errors[0][0];
+        for (int i = 0; i < errors.length; i++) {
+            if (!errors[i][0].equals(Float.NaN)){
+                maxElement = errors[i][0];
+                break;
+            }
+        }
+
         for (T[] error : errors) {
-            if (isGreater(error[0], maxElement)) {
+            if (!error[0].equals(Float.NaN) && isGreater(error[0], maxElement)) {
+                maxElement = error[0];
+            }
+        }
+        return maxElement;
+    }
+
+    public static <T extends Number> T testError_d(T[][] matrix1, T[][] matrix2) {
+        T[][] errors = substract(matrix1,matrix2);
+        for (int i = 0; i < errors.length; i++) {
+            errors[i][0] = GenericNumberUtils.abs(errors[i][0]);
+        }
+        T maxElement = errors[0][0];
+        for (int i = 0; i < errors.length; i++) {
+            if (!errors[i][0].equals(Float.NaN)){
+                maxElement = errors[i][0];
+                break;
+            }
+        }
+
+        for (T[] error : errors) {
+            if (!error[0].equals(Float.NaN) && isGreater(error[0], maxElement)) {
                 maxElement = error[0];
             }
         }
