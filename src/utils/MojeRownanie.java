@@ -121,23 +121,12 @@ public class MojeRownanie<T extends Number> {
         T[] m = GenericVectorUtils.getZerosVector(values[0][0],values.length -k);
 
         for (int i = 0; i < m.length; i++){
-//            System.out.println("-----");
-//            System.out.println(i-1);
-//            if (values[k - 1][k - 1].equals(GenericNumberUtils.getZero(values[k - 1][k - 1]))) {
-//                continue;
-//            }
             m[i] = divide(values[i + k][k - 1], values[k - 1][k - 1]);
-
         }
-
-//        System.out.println("m:" + Arrays.toString(m)); //ok
-
 
             int mi = 0;
             for (int i = k; i < values.length; i++) {
                 for (int j = k - 1; j < values[0].length; j++) {
-//                System.out.printf("[%d][%d]", i, j);
-//                    System.out.println(mi);
                     T val = substract(values[i][j], (multiply(values[k - 1][j], m[mi])));
                     values[i][j] = val;
                 }
@@ -148,10 +137,36 @@ public class MojeRownanie<T extends Number> {
                 mi++;
             }
 
+        return b;
+    }
 
-//        else {
-//            System.out.println("skip");
-//        }
+    private T[][] k1_sparse(int k){
+        T[] m = GenericVectorUtils.getZerosVector(values[0][0],values.length -k);
+        boolean zero = true;
+        for (int i = k; i < values.length; i++){
+            if (!values[i][k-1].equals(getZero(values[0][0]))){
+                zero = false;
+            }
+        }
+
+        if (!zero) {
+
+
+            for (int i = 0; i < m.length; i++) {
+                m[i] = divide(values[i + k][k - 1], values[k - 1][k - 1]);
+            }
+            int mi = 0;
+            for (int i = k; i < values.length; i++) {
+                for (int j = k - 1; j < values[0].length; j++) {
+                    T val = substract(values[i][j], (multiply(values[k - 1][j], m[mi])));
+                    values[i][j] = val;
+                }
+                T valB = substract(b[i][0], multiply(m[mi], b[k - 1][0]));
+                b[i][0] = valB;
+
+                mi++;
+            }
+        }
 
         return b;
     }
@@ -174,17 +189,31 @@ public class MojeRownanie<T extends Number> {
                 b1[k][0] = b1[p][0];
                 b1[p][0] = temp_bk;
             }
-//            System.out.println("bf");
-//            for (T[] row : values) {
-//                System.out.println(Arrays.toString(row));
-//            }
             b1 = this.k1(k+1);
-//            System.out.println("after");
-//            for (T[] row : values) {
-//                System.out.println(Arrays.toString(row));
-//            }
         }
-//        System.exit(0);
+        return b1;
+    }
+
+    private T[][] gaussPGkrok1_sparse(){
+
+        T[][] b1 = GenericMatrixUtils.cloneMatrix(b);
+
+        for (int k = 0; k < values.length-1; k++){
+            int p = maxCol(k);
+            if (k != p){
+                T[] rowK = values[k];
+                T[] rowP = values[p];
+
+                values[k] = rowP;
+                values[p] = rowK;
+
+                T temp_bk = b1[k][0];
+                b1[k][0] = b1[p][0];
+                b1[p][0] = temp_bk;
+            }
+
+            b1 = this.k1_sparse(k+1);
+        }
         return b1;
     }
 
@@ -205,13 +234,12 @@ public class MojeRownanie<T extends Number> {
         return result;
     }
 
-//    public T[][] solveGaussPG2(){
-//        T[][] vectorCopy = b;
-//
-//
-//
-//        return result;
-//    }
+    public T[][] solveGaussPG_sparse(){
+        T[][] b1 = this.gaussPGkrok1_sparse();
+        T[][] result = this.gaussKrok2();
+
+        return result;
+    }
 
     private int maxCol(int col){
         int maxCol = col;

@@ -25,6 +25,15 @@ public class StaticGauss<T extends Number> {
         return result;
     }
 
+    public static <T extends Number> T[][] solveGaussPG_sparse(T[][] values,
+                                                        T[][] b, T classSample){
+        MojaMacierz<T> mm1 = new MojaMacierz<>(values, (Class<T>) classSample.getClass());
+        MojeRownanie<T> mr1 = new MojeRownanie<>(mm1, b, (Class<T>) classSample.getClass());
+        T[][] result = mr1.solveGaussPG_sparse();
+
+        return result;
+    }
+
 
     public static Float[][] solveGaussPG(Float[][] values,
                                           Float[][] b){
