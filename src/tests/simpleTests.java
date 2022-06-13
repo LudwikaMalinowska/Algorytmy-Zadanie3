@@ -1,19 +1,10 @@
 package tests;
 
-import MonteCarlo.MonteCarloMethod;
-import com.opencsv.CSVWriter;
 import models.Fraction;
-import models.TestResult;
 import org.ejml.data.DMatrixSparseCSC;
-import utils.AnotherGauss;
 import utils.FractionUtils;
-import utils.GenerateMatrix;
-import utils.StaticGauss;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigInteger;
-import java.util.Arrays;
 
 public class simpleTests {
     public static void main(String[] args) {
