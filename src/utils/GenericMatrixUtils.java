@@ -73,7 +73,15 @@ public class GenericMatrixUtils {
     private static <T extends Number> T[][] substract(T[][] matrix1, T[][] matrix2) {
         T[][] resultVector = getZerosMatrix(matrix1[0][0],matrix1.length,1);
         for (int i = 0; i < matrix1.length; i++) {
+            System.out.println("matrix1[i][0]: " + matrix1[i][0]);
+            System.out.println("matrix2[i][0]: " + matrix2[i][0]);
             resultVector[i][0] = GenericNumberUtils.substract(matrix1[i][0],matrix2[i][0]);
+            System.out.println(i);
+            if (resultVector[i][0].equals(Float.NaN)){
+                System.out.println("NaN");
+                System.exit(0);
+            }
+
         }
         return resultVector;
     }

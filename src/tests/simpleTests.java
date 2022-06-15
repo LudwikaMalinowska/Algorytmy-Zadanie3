@@ -58,8 +58,8 @@ public class simpleTests {
             };
             writer.writeNext(naglowki);
             for (int i = 50; i <=50; i += 10) {
-                TestResult<Double> testResultGaussFloat = MatrixSolvers.solveMatrixGaussPgAndCountErrors_d(i,new Float(1),1000);
-                TestResult<Double> testResultGaussDouble = MatrixSolvers.solveMatrixGaussPgAndCountErrors_d(i,new Double(1),1000);
+                TestResult<Float> testResultGaussFloat = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Float(1),1000);
+                TestResult<Double> testResultGaussDouble = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Double(1),1000);
 
                 long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
                 System.out.println(String.format("%s, %s", i, totalTime));
