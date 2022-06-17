@@ -36,7 +36,7 @@ public class MatrixSolvers {
     public static <T extends Number> TestResult<T> solveMatrixGaussPgAndCountErrors(int numberOfAllVoters,T classSample, int numbersOfIterations){
             long start = System.currentTimeMillis();
             T[][] resultFromGauss= solveMatrixGaussPg(numberOfAllVoters,classSample);
-            simpleTests.prettyPrint(resultFromGauss);
+//            simpleTests.prettyPrint(resultFromGauss);
             long end = System.currentTimeMillis();
             long timeGaussPG= end - start;
             T[][] resultFromMonteCarlo= simulationResultsMatrix(classSample,numberOfAllVoters,numbersOfIterations);

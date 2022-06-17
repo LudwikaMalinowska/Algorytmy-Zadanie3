@@ -1,5 +1,7 @@
 package utils;
 
+import MonteCarlo.MonteCarloMethod;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
@@ -125,7 +127,9 @@ public class MojeRownanie<T extends Number> {
         }
 
             int mi = 0;
+//            System.out.println("val length" + values.length);
             for (int i = k; i < values.length; i++) {
+
                 for (int j = k - 1; j < values[0].length; j++) {
                     T val = substract(values[i][j], (multiply(values[k - 1][j], m[mi])));
                     values[i][j] = val;
@@ -135,6 +139,7 @@ public class MojeRownanie<T extends Number> {
                 b[i][0] = valB;
 
                 mi++;
+
             }
 
         return b;
@@ -227,9 +232,11 @@ public class MojeRownanie<T extends Number> {
     }
 
     public T[][] solveGaussPG(){
+        System.out.println("Step 1.");
         T[][] b1 = this.gaussPGkrok1();
-
+        System.out.println("Step 2.");
         T[][] result = this.gaussKrok2();
+        System.out.println("End.");
 
         return result;
     }

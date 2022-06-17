@@ -15,6 +15,8 @@ public class Fraction extends Number {
     }
 
     public Fraction(BigInteger nominator, BigInteger denominator) {
+        if (nominator.toString().equals("NaN") || denominator.toString().equals("NaN")) throw new RuntimeException("NaN");
+
         if (nominator.equals(BigInteger.ZERO)) {
             denominator = BigInteger.ONE;
         }
