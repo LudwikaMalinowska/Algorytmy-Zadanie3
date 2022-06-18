@@ -69,20 +69,14 @@ public class Fraction extends Number {
     }
 
     private BigInteger nwd(BigInteger first, BigInteger second) {
-        while (!first.equals(second)){
-            if (first.equals(BigInteger.ONE) || second.equals(BigInteger.ONE))
-                break;
-            else if (first.compareTo(second) > 0)
-                first = first.subtract(second);
-            else
-                second = second.subtract(first);
+        BigInteger newFirst = new BigInteger(first.toString());
+        BigInteger newSecond = new BigInteger(second.toString());
+        while (!newSecond.equals(BigInteger.ZERO)){
+            BigInteger pom = new BigInteger((newSecond.toString()));
+            newSecond = newFirst.mod(newSecond);
+            newFirst = pom;
         }
-
-
-        if (first.compareTo(second) <= 0)
-            return first;
-        else
-            return second;
+        return newFirst;
     }
 
     public Fraction abs() {

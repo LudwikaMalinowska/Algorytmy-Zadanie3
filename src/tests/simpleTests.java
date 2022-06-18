@@ -86,13 +86,14 @@ public class simpleTests {
                     CSVWriter.DEFAULT_LINE_END);
 
             String[] naglowki = new String[]{
+                    "i",
                     "MaxErrorGaussFraction",
                     "TimeofGaussFloat",
 
 
             };
             writer.writeNext(naglowki);
-            for (int i = 13; i <=14; i += 1) {
+            for (int i = 14; i <=14; i += 1) {
                 System.out.println(i);
                 TestResult<Fraction> testResultGaussFraction = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Fraction(BigInteger.ONE,BigInteger.ONE),1000);
 
@@ -100,6 +101,7 @@ public class simpleTests {
                 long totalTime = testResultGaussFraction.getTime();
                 System.out.println(String.format(" Fraction total time %s, %s", i, totalTime));
                 String[] linia = new String[]{
+                        i + "",
                         testResultGaussFraction.getError() + "",
                         testResultGaussFraction.getTime() + "",
 

@@ -99,6 +99,7 @@ public class MojeRownanie<T extends Number> {
 
         // to jest ten krok gdzie przechodzi już mając wynik ostatniego x i wylicza
         for (int k = x.length-2; k >= 0 ; k--){
+            MonteCarloMethod.progressBar(x.length-2 - k,x.length-2, 50);
 //            System.out.println(k);
             T bk = b[k][0];
             T akk = values[k][k];
