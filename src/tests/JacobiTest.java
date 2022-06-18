@@ -17,25 +17,21 @@ import static utils.GenerateMatrix.createVotesOptions;
 
 public class JacobiTest {
     public static void main(String[] args) {
-//                Double[][] finalMatrix = GenerateMatrix.createFinalMatrix(0d, 3);
-//        simpleTests.prettyPrint(finalMatrix);
 
-//        System.out.println("\nJacobi\n");
-//        Double[][] matrix = GenerateMatrix.createFinalMatrix(1d, 3);
-//        Double[][] vector = GenerateMatrix.createFinalVector(1d,3);
-//        Double[][] gaussResult= Jacobi.countJacobi(matrix, vector);
-//
-//        simpleTests.prettyPrint(gaussResult);
-//
-//        System.out.println("\nSeidel\n");
-//        Double[][] matrix2 = GenerateMatrix.createFinalMatrix(1d, 3);
-//        Double[][] vector2 = GenerateMatrix.createFinalVector(1d,3);
-//        Double[][] gaussResult2= Seidel.countSeidel(matrix2, vector2);
-//
-//        simpleTests.prettyPrint(gaussResult2);
+    }
+    public static void make_3csv() {
 
+    csv_with_acc(1e-6, "JacobiResults_1e-6.csv");
+        System.out.println("------------------Jacobi csv1 Done ------------");
+    csv_with_acc(1e-10, "JacobiResults_1e-10.csv");
+        System.out.println("------------------csv2 Done ------------");
+    csv_with_acc(1e-14, "JacobiResults_1e-14.csv");
+        System.out.println("------------------csv3 Done ------------");
+    }
+
+    public static void csv_with_acc(Double accuracy, String filename){
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter("JacobiResults.csv", false),
+            CSVWriter writer = new CSVWriter(new FileWriter(filename, false),
                     ';',
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
@@ -51,9 +47,9 @@ public class JacobiTest {
             writer.writeNext(naglowki);
             for (int i = 25; i <=100; i += 25) {
                 TestResult<Float> testResultGaussFloat =
-                        solveMatrixJacobiAndCountErrors(i,new Float(1),1000);
+                        solveMatrixJacobiAndCountErrors(i,new Float(1),1000, accuracy.floatValue());
                 TestResult<Double> testResultGaussDouble =
-                       solveMatrixJacobiAndCountErrors(i,new Double(1),1000);
+                        solveMatrixJacobiAndCountErrors(i,new Double(1),1000, accuracy);
 
                 long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
                 System.out.println(String.format("%s, %s", i, totalTime));
@@ -70,21 +66,21 @@ public class JacobiTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    public static <T extends Number> T[][] solveMatrixJacobi(int numberOfAllVoters,T classSample){
+    public static <T extends Number> T[][] solveMatrixJacobi(int numberOfAllVoters,T classSample, T dokladnosc){
         ArrayList<Pair<Integer, Integer>> votesOptions=GenerateMatrix.createVotesOptions(numberOfAllVoters);
         T[][] matrix = GenerateMatrix.createFinalMatrix(classSample, numberOfAllVoters);
         T[][] vector = GenerateMatrix.createFinalVector(classSample,numberOfAllVoters);
 //        T [][] gaussResult= StaticGauss.solveGaussPG(matrix, vector, classSample);
-        T[][] gaussResult= Jacobi.countJacobi(matrix, vector);
+        T[][] gaussResult= Jacobi.countJacobi(matrix, vector, dokladnosc);
         return gaussResult;
     }
 
-    public static <T extends Number> TestResult<T> solveMatrixJacobiAndCountErrors(int numberOfAllVoters,T classSample, int numbersOfIterations){
+    public static <T extends Number> TestResult<T> solveMatrixJacobiAndCountErrors(int numberOfAllVoters,T classSample,
+                                                                                   int numbersOfIterations, T dokladnosc){
         long start = System.currentTimeMillis();
-        T[][] resultFromGauss= solveMatrixJacobi(numberOfAllVoters,classSample);
+        T[][] resultFromGauss= solveMatrixJacobi(numberOfAllVoters,classSample, dokladnosc);
         long end = System.currentTimeMillis();
         long timeGaussPG= end - start;
         T[][] resultFromMonteCarlo= simulationResultsMatrix(classSample,numberOfAllVoters,numbersOfIterations);
