@@ -92,7 +92,7 @@ public class simpleTests {
 
             };
             writer.writeNext(naglowki);
-            for (int i = 11; i <=14; i += 1) {
+            for (int i = 13; i <=14; i += 1) {
                 System.out.println(i);
                 TestResult<Fraction> testResultGaussFraction = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Fraction(BigInteger.ONE,BigInteger.ONE),1000);
 
