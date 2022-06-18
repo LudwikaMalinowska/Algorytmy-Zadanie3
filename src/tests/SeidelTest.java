@@ -13,10 +13,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SeidelTest {
-
     public static void main(String[] args) {
+
+    }
+
+    public static void make3csv() {
+        csv_with_acc(1e-6, "SeidelResults_1e-6.csv");
+        System.out.println("------------------Seidel csv1 Done ------------");
+        csv_with_acc(1e-10, "SeidelResults_1e-10.csv");
+        System.out.println("------------------Seidel csv2 Done ------------");
+        csv_with_acc(1e-14, "SeidelResults_1e-14.csv");
+        System.out.println("------------------Seidel csv3 Done ------------");
+    }
+
+    public static void csv_with_acc(Double accuracy, String filename){
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter("SeidelResults.csv", false),
+            CSVWriter writer = new CSVWriter(new FileWriter(filename, false),
                     ';',
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
@@ -32,9 +44,9 @@ public class SeidelTest {
             writer.writeNext(naglowki);
             for (int i = 25; i <=100; i += 25) {
                 TestResult<Float> testResultGaussFloat =
-                        solveMatrixJacobiAndCountErrors(i,new Float(1),1000, 1e-6f);
+                        solveMatrixJacobiAndCountErrors(i,new Float(1),1000, accuracy.floatValue());
                 TestResult<Double> testResultGaussDouble =
-                        solveMatrixJacobiAndCountErrors(i,new Double(1),1000, 1e-6);
+                        solveMatrixJacobiAndCountErrors(i,new Double(1),1000, accuracy);
 
                 long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
                 System.out.println(String.format("%s, %s", i, totalTime));
