@@ -51,9 +51,9 @@ public class JacobiTest {
             writer.writeNext(naglowki);
             for (int i = 25; i <=100; i += 25) {
                 TestResult<Float> testResultGaussFloat =
-                        solveMatrixJacobiAndCountErrors(i,new Float(1),1000);
+                        solveMatrixJacobiAndCountErrors(i,new Float(1),1000, 1E-6f);
                 TestResult<Double> testResultGaussDouble =
-                       solveMatrixJacobiAndCountErrors(i,new Double(1),1000);
+                       solveMatrixJacobiAndCountErrors(i,new Double(1),1000, 1E-6d);
 
                 long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
                 System.out.println(String.format("%s, %s", i, totalTime));
@@ -73,18 +73,19 @@ public class JacobiTest {
 
     }
 
-    public static <T extends Number> T[][] solveMatrixJacobi(int numberOfAllVoters,T classSample){
+    public static <T extends Number> T[][] solveMatrixJacobi(int numberOfAllVoters,T classSample, T dokladnosc){
         ArrayList<Pair<Integer, Integer>> votesOptions=GenerateMatrix.createVotesOptions(numberOfAllVoters);
         T[][] matrix = GenerateMatrix.createFinalMatrix(classSample, numberOfAllVoters);
         T[][] vector = GenerateMatrix.createFinalVector(classSample,numberOfAllVoters);
 //        T [][] gaussResult= StaticGauss.solveGaussPG(matrix, vector, classSample);
-        T[][] gaussResult= Jacobi.countJacobi(matrix, vector);
+        T[][] gaussResult= Jacobi.countJacobi(matrix, vector, dokladnosc);
         return gaussResult;
     }
 
-    public static <T extends Number> TestResult<T> solveMatrixJacobiAndCountErrors(int numberOfAllVoters,T classSample, int numbersOfIterations){
+    public static <T extends Number> TestResult<T> solveMatrixJacobiAndCountErrors(int numberOfAllVoters,T classSample,
+                                                                                   int numbersOfIterations, T dokladnosc){
         long start = System.currentTimeMillis();
-        T[][] resultFromGauss= solveMatrixJacobi(numberOfAllVoters,classSample);
+        T[][] resultFromGauss= solveMatrixJacobi(numberOfAllVoters,classSample, dokladnosc);
         long end = System.currentTimeMillis();
         long timeGaussPG= end - start;
         T[][] resultFromMonteCarlo= simulationResultsMatrix(classSample,numberOfAllVoters,numbersOfIterations);
