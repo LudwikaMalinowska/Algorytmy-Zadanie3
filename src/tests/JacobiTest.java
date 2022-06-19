@@ -83,9 +83,16 @@ public class JacobiTest {
         T[][] resultFromGauss= solveMatrixJacobi(numberOfAllVoters,classSample, dokladnosc);
         long end = System.currentTimeMillis();
         long timeGaussPG= end - start;
-        T[][] resultFromMonteCarlo= simulationResultsMatrix(classSample,numberOfAllVoters,numbersOfIterations);
+//        T[][] resultFromMonteCarlo= simulationResultsMatrix(classSample,numberOfAllVoters,numbersOfIterations);
 //        MonteCarloMethod monteCarlo = new MonteCarloMethod(numberOfY,numberOfN,numberOfAllVoters,numbersOfIterations);
-        T error = GenericMatrixUtils.testError(resultFromGauss,resultFromMonteCarlo);
+
+        T[][] matrix = GenerateMatrix.createFinalMatrix(classSample, numberOfAllVoters);
+        T[][] vector = GenerateMatrix.createFinalVector(classSample,numberOfAllVoters);
+        MojaMacierz<T> mojaMacierz = new MojaMacierz<>(matrix, (Class<T>) classSample.getClass());
+        MojaMacierz<T> mojResult = new MojaMacierz<>(resultFromGauss, (Class<T>) classSample.getClass());
+        T[][] compare = mojaMacierz.multiply(mojResult).getValues();
+
+        T error = GenericMatrixUtils.testError(vector,compare);
         return new TestResult<T>(error,timeGaussPG);
     }
 
