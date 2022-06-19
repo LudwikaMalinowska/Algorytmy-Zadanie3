@@ -10,8 +10,51 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 
+import static tests.SparseTest.solveMatrixGaussSparseAndCountErrors;
+
 public class simpleTests {
     public static void main(String[] args) {
+
+        try {
+            CSVWriter writer = new CSVWriter(new FileWriter("sparse_gaussfinal.csv", false),
+                    ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+
+            String[] naglowki = new String[]{
+                    "Size",
+                    "MaxErrorGaussSparseFloat",
+                    "TimeofGaussSparseFloat",
+                    "MaxErrorGaussSparseDouble",
+                    "TimeofGaussSparseDouble"
+
+            };
+            writer.writeNext(naglowki);
+            for (int i = 25; i <=100; i += 25) {
+                TestResult<Float> testResultGaussFloat =
+                        solveMatrixGaussSparseAndCountErrors(i,new Float(1),1000);
+                TestResult<Double> testResultGaussDouble =
+                        solveMatrixGaussSparseAndCountErrors(i,new Double(1),1000);
+
+                long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
+                System.out.println(String.format("%s, %s", i, totalTime));
+                String[] linia = new String[]{
+                        i +"",
+                        testResultGaussFloat.getError() + "",
+                        testResultGaussFloat.getTime() + "",
+                        testResultGaussDouble.getError() + "",
+                        testResultGaussDouble.getTime() + "",
+
+                };
+                writer.writeNext(linia);
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 //        Double[][] finalMatrix = GenerateMatrix.createFinalMatrix(0d, 3);
 //        prettyPrint(finalMatrix);
 //        Fraction [][] finalMatrixFraction = GenerateMatrix.createFinalMatrix(new Fraction(BigInteger.ONE,BigInteger.ONE),6);
@@ -42,69 +85,34 @@ public class simpleTests {
 //        MonteCarloMethod monteCarlo = new MonteCarloMethod(2,12,20,10000);
 //        System.out.println(monteCarlo.simulation());
 
-//        try {
-//            CSVWriter writer = new CSVWriter(new FileWriter("GaussPgResults_2.csv", false),
-//                    ';',
-//                    CSVWriter.NO_QUOTE_CHARACTER,
-//                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-//                    CSVWriter.DEFAULT_LINE_END);
-//
-//            String[] naglowki = new String[]{
-//                    "MaxErrorGaussFloat",
-//                    "TimeofGaussFloat",
-//                    "MaxErrorGaussDouble",
-//                    "TimeofGaussDouble"
-//
-//            };
-//            writer.writeNext(naglowki);
-//            for (int i = 50; i <=50; i += 10) {
-//                TestResult<Float> testResultGaussFloat = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Float(1),1000);
-//                TestResult<Double> testResultGaussDouble = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Double(1),1000);
-//
-//                long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
-//                System.out.println(String.format("%s, %s", i, totalTime));
-//                String[] linia = new String[]{
-//                        testResultGaussFloat.getError() + "",
-//                        testResultGaussFloat.getTime() + "",
-//                        testResultGaussDouble.getError() + "",
-//                        testResultGaussDouble.getTime() + "",
-//
-//                };
-//                writer.writeNext(linia);
-//            }
-//            writer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter("GaussPgResultsFractionFinalTest.csv", false),
+            CSVWriter writer = new CSVWriter(new FileWriter("GaussPgResultsFinal.csv", false),
                     ';',
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
 
             String[] naglowki = new String[]{
-                    "i",
-                    "MaxErrorGaussFraction",
-                    "TimeofGaussFraction",
-
+                    "Size",
+                    "MaxErrorGaussFloat",
+                    "TimeofGaussFloat",
+                    "MaxErrorGaussDouble",
+                    "TimeofGaussDouble"
 
             };
             writer.writeNext(naglowki);
-            for (int i = 5; i <=10; i += 1) {
-                System.out.println(i);
-                TestResult<Fraction> testResultGaussFraction = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Fraction(BigInteger.ONE,BigInteger.ONE),1000);
+            for (int i = 25; i <=100; i += 25) {
+                TestResult<Float> testResultGaussFloat = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Float(1),1000);
+                TestResult<Double> testResultGaussDouble = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Double(1),1000);
 
-
-                long totalTime = testResultGaussFraction.getTime();
-                System.out.println(String.format(" Fraction total time %s, %s", i, totalTime));
+                long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
+                System.out.println(String.format("%s, %s", i, totalTime));
                 String[] linia = new String[]{
-                        i + "",
-                        testResultGaussFraction.getError() + "",
-                        testResultGaussFraction.getTime() + "",
-
+                        i+"",
+                        testResultGaussFloat.getError() + "",
+                        testResultGaussFloat.getTime() + "",
+                        testResultGaussDouble.getError() + "",
+                        testResultGaussDouble.getTime() + "",
 
                 };
                 writer.writeNext(linia);
@@ -113,6 +121,43 @@ public class simpleTests {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//
+//
+//        try {
+//            CSVWriter writer = new CSVWriter(new FileWriter("GaussPgResultsFractionFinalTest.csv", false),
+//                    ';',
+//                    CSVWriter.NO_QUOTE_CHARACTER,
+//                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+//                    CSVWriter.DEFAULT_LINE_END);
+//
+//            String[] naglowki = new String[]{
+//                    "i",
+//                    "MaxErrorGaussFraction",
+//                    "TimeofGaussFraction",
+//
+//
+//            };
+//            writer.writeNext(naglowki);
+//            for (int i = 5; i <=10; i += 1) {
+//                System.out.println(i);
+//                TestResult<Fraction> testResultGaussFraction = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Fraction(BigInteger.ONE,BigInteger.ONE),1000);
+//
+//
+//                long totalTime = testResultGaussFraction.getTime();
+//                System.out.println(String.format(" Fraction total time %s, %s", i, totalTime));
+//                String[] linia = new String[]{
+//                        i + "",
+//                        testResultGaussFraction.getError() + "",
+//                        testResultGaussFraction.getTime() + "",
+//
+//
+//                };
+//                writer.writeNext(linia);
+//            }
+//            writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 //
 
 
