@@ -127,8 +127,5 @@ public class GenerateMatrix {
         return new ArrayList<>(Arrays.asList(yVotes, nVotes, unknown));
     }
 
-    /*public ArrayList<Pair<String, String>> generatePairs(ArrayList<String> arr){
 
-
-    }*/
 }

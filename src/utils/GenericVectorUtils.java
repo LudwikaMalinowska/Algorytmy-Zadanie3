@@ -31,4 +31,21 @@ public class GenericVectorUtils {
             throw new IllegalArgumentException("Numbers must be exact type and float or double");
         }
     }
+
+    public static <T extends Number> T[][] multiplyByVector(T[][] values ,T[][] vector, T classSample){
+        if (vector.length != values[0].length) throw new RuntimeException();
+
+      T[][] result = GenericMatrixUtils.getZerosMatrix(classSample, values.length, 1);
+
+        for (int i = 0; i < result.length; i++){
+            T sum = GenericNumberUtils.getZero(classSample);
+            for (int j = 0; j < values[0].length; j++){
+                sum = GenericNumberUtils.sum(sum,GenericNumberUtils.multiply(values[i][j],vector[j][0]));
+
+            }
+            result[i][0] = sum;
+        }
+
+        return result;
+    }
 }

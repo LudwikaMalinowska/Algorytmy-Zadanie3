@@ -79,7 +79,7 @@ public class simpleTests {
 //
 //
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter("GaussPgResultsFraction2.csv", false),
+            CSVWriter writer = new CSVWriter(new FileWriter("GaussPgResultsFractionFinalTest.csv", false),
                     ';',
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
@@ -88,12 +88,12 @@ public class simpleTests {
             String[] naglowki = new String[]{
                     "i",
                     "MaxErrorGaussFraction",
-                    "TimeofGaussFloat",
+                    "TimeofGaussFraction",
 
 
             };
             writer.writeNext(naglowki);
-            for (int i = 14; i <=14; i += 1) {
+            for (int i = 5; i <=10; i += 1) {
                 System.out.println(i);
                 TestResult<Fraction> testResultGaussFraction = MatrixSolvers.solveMatrixGaussPgAndCountErrors(i,new Fraction(BigInteger.ONE,BigInteger.ONE),1000);
 
