@@ -60,6 +60,7 @@ public class MonteCarloMethod {
 
     public <T extends Number> T simulation(T classSample){
         for(int i = 0; i< IterationsNumber; i++){
+            progressBar(i, IterationsNumber, 50);
             ArrayList<Voter> voters = generateVoters();
             while (checkIfStateIsNotStable(voters)){
                 Voter first = voters.get((int) (Math.random() * voters.size()));
@@ -76,6 +77,19 @@ public class MonteCarloMethod {
         return propability(simulationResult,classSample);
     }
 
+    private static final String PROGRESS_BAR = "[%s] %d/%d\r";
 
+    public static void progressBar(int count, int max, int res) {
+        int nOfPassed = (int)(((double)count)/max * res);
+        int nOfNotPassed = res-nOfPassed;
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < nOfPassed; i++) {
+            s.append("=");
+        }
+        for (int i = 0; i < nOfNotPassed; i++) {
+            s.append("-");
+        }
+        System.out.printf(PROGRESS_BAR, s, count, max);
+    }
 
 }

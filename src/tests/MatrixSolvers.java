@@ -36,12 +36,24 @@ public class MatrixSolvers {
     public static <T extends Number> TestResult<T> solveMatrixGaussPgAndCountErrors(int numberOfAllVoters,T classSample, int numbersOfIterations){
             long start = System.currentTimeMillis();
             T[][] resultFromGauss= solveMatrixGaussPg(numberOfAllVoters,classSample);
+//            simpleTests.prettyPrint(resultFromGauss);
             long end = System.currentTimeMillis();
             long timeGaussPG= end - start;
             T[][] resultFromMonteCarlo= simulationResultsMatrix(classSample,numberOfAllVoters,numbersOfIterations);
 //        MonteCarloMethod monteCarlo = new MonteCarloMethod(numberOfY,numberOfN,numberOfAllVoters,numbersOfIterations);
         T error = GenericMatrixUtils.testError(resultFromGauss,resultFromMonteCarlo);
         return new TestResult<T>(error,timeGaussPG);
+    }
+
+    public static <T extends Number> TestResult<Double> solveMatrixGaussPgAndCountErrors_d(int numberOfAllVoters,T classSample, int numbersOfIterations){
+        long start = System.currentTimeMillis();
+        T[][] resultFromGauss= solveMatrixGaussPg(numberOfAllVoters,classSample);
+        long end = System.currentTimeMillis();
+        long timeGaussPG= end - start;
+        T[][] resultFromMonteCarlo= simulationResultsMatrix(classSample,numberOfAllVoters,numbersOfIterations);
+//        MonteCarloMethod monteCarlo = new MonteCarloMethod(numberOfY,numberOfN,numberOfAllVoters,numbersOfIterations);
+        Double error = GenericMatrixUtils.testError_d(resultFromGauss,resultFromMonteCarlo);
+        return new TestResult<Double>(error,timeGaussPG);
     }
 
 

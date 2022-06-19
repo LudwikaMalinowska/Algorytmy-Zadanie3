@@ -73,7 +73,15 @@ public class GenericMatrixUtils {
     private static <T extends Number> T[][] substract(T[][] matrix1, T[][] matrix2) {
         T[][] resultVector = getZerosMatrix(matrix1[0][0],matrix1.length,1);
         for (int i = 0; i < matrix1.length; i++) {
+            System.out.println("matrix1[i][0]: " + matrix1[i][0]);
+            System.out.println("matrix2[i][0]: " + matrix2[i][0]);
             resultVector[i][0] = GenericNumberUtils.substract(matrix1[i][0],matrix2[i][0]);
+            System.out.println(i);
+            if (resultVector[i][0].equals(Float.NaN)){
+                System.out.println("NaN");
+                System.exit(0);
+            }
+
         }
         return resultVector;
     }
@@ -100,21 +108,36 @@ public class GenericMatrixUtils {
         return maxElement;
     }
 
-    public static <T extends Number> T testError_d(T[][] matrix1, T[][] matrix2) {
-        T[][] errors = substract(matrix1,matrix2);
-        for (int i = 0; i < errors.length; i++) {
-            errors[i][0] = GenericNumberUtils.abs(errors[i][0]);
+    public static <T extends Number> Double testError_d(T[][] matrix1, T[][] matrix2) {
+        Double[][] m1 = getZerosMatrix(1d,matrix1.length,1);
+        Double[][] m2 = getZerosMatrix(1d,matrix1.length,1);
+//        T[][] errors = substract(matrix1,matrix2);
+        for (int i = 0; i < matrix1.length; i++){
+            for (int j = 0; j < matrix1[0].length; j++){
+                m1[i][j] = Jacobi.convertToType(Double.class,
+                        String.valueOf(matrix1[i][j].doubleValue()));
+            }
         }
-        T maxElement = errors[0][0];
-        for (int i = 0; i < errors.length; i++) {
-            if (!errors[i][0].equals(Float.NaN)){
-                maxElement = errors[i][0];
-                break;
+        for (int i = 0; i < matrix2.length; i++){
+            for (int j = 0; j < matrix2[0].length; j++){
+                m2[i][j] = Jacobi.convertToType(Double.class,
+                        String.valueOf(matrix2[i][j].doubleValue()));
             }
         }
 
-        for (T[] error : errors) {
-            if (!error[0].equals(Float.NaN) && isGreater(error[0], maxElement)) {
+
+        Double[][] errors = substract(m1,m2);
+        for (int i = 0; i < errors.length; i++) {
+            errors[i][0] = GenericNumberUtils.abs(errors[i][0]);
+        }
+        Double maxElement = errors[0][0];
+        for (Double[] doubles : errors) {
+            maxElement = doubles[0];
+            break;
+        }
+
+        for (Double[] error : errors) {
+            if (isGreater(error[0], maxElement)) {
                 maxElement = error[0];
             }
         }

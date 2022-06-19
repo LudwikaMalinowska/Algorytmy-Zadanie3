@@ -8,23 +8,21 @@ import static utils.GenericMatrixUtils.testError;
 public class Jacobi<T extends Number> {
 
 
-    public static <T extends Number> T[][] countJacobi(T [][] values, T[][] vector){
+    public static <T extends Number> T[][] countJacobi(T [][] values, T[][] vector, T dokladnosc){
        T[][] x_arr = getZerosMatrix(values[0][0],values.length, 1);
-       T[][] x_arr_prev = null;
-//       Double dokladnosc = Math.pow(10, -14);
-       T dokladnosc = (T) convertToType(values[0][0].getClass(),
-               String.valueOf(Math.pow(10, -14)));
+       T[][] x_arr_prev = getZerosMatrix(values[0][0],values.length, 1);
 
-        for (int i = 0; ; i++) {
-//            System.out.println(i);
-            if (x_arr_prev != null && i >= 10) {
+        for (int i = 0; i <= 1000; i++) {
+            if (i > 1) {
                 T norma = testError(x_arr, x_arr_prev);
 
                 if (isGreater(dokladnosc, norma)){
                     break;
                 }
+
+
             }
-            x_arr_prev = Arrays.copyOf(x_arr, x_arr.length);
+            x_arr_prev = GenericMatrixUtils.cloneMatrix(x_arr);
 
             for (int j = 0; j < values.length; j++){
                 T roznica = vector[j][0];
@@ -33,7 +31,6 @@ public class Jacobi<T extends Number> {
                         roznica = substract(roznica,multiply(values[j][k], x_arr_prev[k][0]));
 
                 }
-
                 x_arr[j][0] = multiply(divide(getOne(values[0][0]),values[j][j]),roznica);
             }
         }
@@ -64,7 +61,7 @@ public class Jacobi<T extends Number> {
                 {-11.0},
                 {15.0},
         };
-        Double[][] result = Jacobi.countJacobi(arr_a, arr_y);
+        Double[][] result = Jacobi.countJacobi(arr_a, arr_y, 1e-6);
 //        System.out.println(Arrays.toString(result));
 
         for (Double[] row : result){

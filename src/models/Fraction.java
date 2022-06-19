@@ -15,6 +15,8 @@ public class Fraction extends Number {
     }
 
     public Fraction(BigInteger nominator, BigInteger denominator) {
+        if (nominator.toString().equals("NaN") || denominator.toString().equals("NaN")) throw new RuntimeException("NaN");
+
         if (nominator.equals(BigInteger.ZERO)) {
             denominator = BigInteger.ONE;
         }
@@ -67,13 +69,14 @@ public class Fraction extends Number {
     }
 
     private BigInteger nwd(BigInteger first, BigInteger second) {
-        while (!first.equals(second))
-            if (first.compareTo(second) > 0)
-                first = first.subtract(second);
-            else
-                second = second.subtract(first);
-
-        return first;
+        BigInteger newFirst = new BigInteger(first.toString());
+        BigInteger newSecond = new BigInteger(second.toString());
+        while (!newSecond.equals(BigInteger.ZERO)){
+            BigInteger pom = new BigInteger((newSecond.toString()));
+            newSecond = newFirst.mod(newSecond);
+            newFirst = pom;
+        }
+        return newFirst;
     }
 
     public Fraction abs() {
