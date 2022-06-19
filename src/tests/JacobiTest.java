@@ -29,6 +29,57 @@ public class JacobiTest {
         System.out.println("------------------csv3 Done ------------");
     }
 
+    public static String[] monteCarloLine(int i, int iters, double accuracy){
+        TestResult<Float> testResultGaussFloat =
+                solveMatrixJacobiAndCountErrors_montecarlo(i,new Float(1),iters, (float) accuracy);
+        TestResult<Double> testResultGaussDouble =
+                solveMatrixJacobiAndCountErrors_montecarlo(i,new Double(1),iters, accuracy);
+
+        long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
+        System.out.println(String.format("%s, %s", i, totalTime));
+        String[] linia = new String[]{
+                i + "",
+                testResultGaussFloat.getError() + "",
+                testResultGaussFloat.getTime() + "",
+                testResultGaussDouble.getError() + "",
+                testResultGaussDouble.getTime() + "",
+
+        };
+
+        return linia;
+    }
+
+    public static void makecsv_jacobi_montecarlo() {
+        try {
+            CSVWriter writer = new CSVWriter(new FileWriter("Jacobi_montecarlo_final.csv", false),
+                    ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+
+            String[] naglowki = new String[]{
+                    "i",
+                    "MaxErrorJacobiFloat",
+                    "TimeofJacobiFloat",
+                    "MaxErrorJacobiDouble",
+                    "TimeofJacobiDouble"
+
+            };
+            writer.writeNext(naglowki);
+
+            String[] linia1 = monteCarloLine(10, 100, 1e-6);
+            String[] linia2 = monteCarloLine(20, 500, 1e-10);
+            String[] linia3 = monteCarloLine(30, 1000, 1e-14);
+            writer.writeNext(linia1);
+            writer.writeNext(linia2);
+            writer.writeNext(linia3);
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void csv_with_acc(Double accuracy, String filename){
         try {
             CSVWriter writer = new CSVWriter(new FileWriter(filename, false),
@@ -38,6 +89,7 @@ public class JacobiTest {
                     CSVWriter.DEFAULT_LINE_END);
 
             String[] naglowki = new String[]{
+                    "i",
                     "MaxErrorJacobiFloat",
                     "TimeofJacobiFloat",
                     "MaxErrorJacobiDouble",
@@ -54,6 +106,7 @@ public class JacobiTest {
                 long totalTime = testResultGaussFloat.getTime() + testResultGaussDouble.getTime();
                 System.out.println(String.format("%s, %s", i, totalTime));
                 String[] linia = new String[]{
+                        i + "",
                         testResultGaussFloat.getError() + "",
                         testResultGaussFloat.getTime() + "",
                         testResultGaussDouble.getError() + "",
@@ -93,6 +146,19 @@ public class JacobiTest {
         T[][] compare = mojaMacierz.multiply(mojResult).getValues();
 
         T error = GenericMatrixUtils.testError(vector,compare);
+        return new TestResult<T>(error,timeGaussPG);
+    }
+
+    public static <T extends Number> TestResult<T> solveMatrixJacobiAndCountErrors_montecarlo(int numberOfAllVoters,T classSample,
+                                                                                   int numbersOfIterations, T dokladnosc){
+        long start = System.currentTimeMillis();
+        T[][] resultFromGauss= solveMatrixJacobi(numberOfAllVoters,classSample, dokladnosc);
+        long end = System.currentTimeMillis();
+        long timeGaussPG= end - start;
+        T[][] resultFromMonteCarlo= simulationResultsMatrix(classSample,numberOfAllVoters,numbersOfIterations);
+//        MonteCarloMethod monteCarlo = new MonteCarloMethod(numberOfY,numberOfN,numberOfAllVoters,numbersOfIterations);
+
+        T error = GenericMatrixUtils.testError(resultFromGauss,resultFromMonteCarlo);
         return new TestResult<T>(error,timeGaussPG);
     }
 
